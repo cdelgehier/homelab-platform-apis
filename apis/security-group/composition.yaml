@@ -22,7 +22,10 @@ spec:
           apiVersion: opentofu.m.upbound.io/v1beta1
           kind: Workspace
           metadata:
-            name: {{ .observed.composite.resource.metadata.name }}
+            # e.g. sg-eu1-dev-osiris-osiris-dev-sg — prefixed by type to avoid collisions between stacks sub-composites in crossplane-system
+            name: sg-{{ .observed.composite.resource.metadata.namespace }}-{{ .observed.composite.resource.metadata.name }}
+            # ProviderConfig.opentofu.m.upbound.io is namespaced — must co-locate workspace in crossplane-system
+            namespace: crossplane-system
             annotations:
               gotemplating.fn.crossplane.io/composition-resource-name: workspace
           spec:
