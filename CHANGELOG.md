@@ -1,3 +1,9 @@
+## v0.2.2 (2026-04-07)
+
+### Fix
+
+- **compositions**: force workspace namespace to crossplane-system
+
 ## v0.2.1 (2026-04-07)
 
 ### Fix

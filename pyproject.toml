@@ -1,11 +1,11 @@
 [project]
 name = "homelab-platform-apis"
-version = "0.2.1"
+version = "0.2.2"
 description = "Crossplane XRDs and Compositions for homelab.crossplane.io"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.2.1"
+version = "0.2.2"
 version_provider = "pep621"
 tag_format = "v$version"
 update_changelog_on_bump = true
