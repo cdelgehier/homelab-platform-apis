@@ -1,0 +1,12 @@
+apiVersion: homelab.crossplane.io/v1alpha1
+kind: XS3Bucket
+metadata:
+  name: example-bucket
+  # namespace: injected by ArgoCD destination.namespace
+spec:
+  providerConfig: aws-personal-eu-west-1
+  bucket: homelab-example-bucket-2026
+  force_destroy: true
+  tags:
+    env: dev
+    managedBy: crossplane

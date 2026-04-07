@@ -1,0 +1,17 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: homelab-crossplane-config
+  annotations:
+    meta.crossplane.io/maintainer: "cdelgehier"
+    meta.crossplane.io/description: "Homelab Crossplane Configurations — XRDs and Compositions for AWS resources"
+spec:
+  crossplane:
+    version: ">=v2.0.0"
+  dependsOn:
+    - provider: xpkg.upbound.io/upbound/provider-opentofu
+      version: ">=v0.1.0"
+    - function: xpkg.upbound.io/crossplane-contrib/function-go-templating
+      version: ">=v0.5.0"
+    - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+      version: ">=v0.3.0"

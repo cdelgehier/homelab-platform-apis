@@ -1,0 +1,42 @@
+name: Release xpkg
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install crossplane CLI
+        run: |
+          curl -sL https://raw.githubusercontent.com/crossplane/crossplane/main/install.sh | sh
+          sudo mv crossplane /usr/local/bin/
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build xpkg
+        run: |
+          crossplane xpkg build \
+            --package-root=apis \
+            --package-file=homelab.xpkg
+
+      - name: Push xpkg (versioned + latest)
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          crossplane xpkg push homelab.xpkg \
+            ghcr.io/${{ github.repository_owner }}/homelab-xpkg:${VERSION}
+          crossplane xpkg push homelab.xpkg \
+            ghcr.io/${{ github.repository_owner }}/homelab-xpkg:latest
