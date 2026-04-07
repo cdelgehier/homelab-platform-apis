@@ -36,7 +36,9 @@ jobs:
       - name: Push xpkg (versioned + latest)
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
-          crossplane xpkg push homelab.xpkg \
+          crossplane xpkg push \
+            -f homelab.xpkg \
             ghcr.io/${{ github.repository_owner }}/homelab-xpkg:${VERSION}
-          crossplane xpkg push homelab.xpkg \
+          crossplane xpkg push \
+            -f homelab.xpkg \
             ghcr.io/${{ github.repository_owner }}/homelab-xpkg:latest
