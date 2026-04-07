@@ -22,16 +22,14 @@ spec:
           apiVersion: opentofu.m.upbound.io/v1beta1
           kind: Workspace
           metadata:
-            # e.g. kms-eu1-dev-osiris-osiris-dev-key — prefixed by type to avoid collisions between stacks sub-composites in crossplane-system
-            name: kms-{{ .observed.composite.resource.metadata.namespace }}-{{ .observed.composite.resource.metadata.name }}
-            # ProviderConfig.opentofu.m.upbound.io is namespaced — must co-locate workspace in crossplane-system
-            namespace: crossplane-system
+            # e.g. kms-osiris-dev-key — type prefix avoids name collisions when stacks create multiple sub-composites with the same name
+            name: kms-{{ .observed.composite.resource.metadata.name }}
             annotations:
               gotemplating.fn.crossplane.io/composition-resource-name: workspace
           spec:
             providerConfigRef:
               name: {{ .observed.composite.resource.spec.providerConfig }}
-              kind: ProviderConfig
+              kind: ClusterProviderConfig
             forProvider:
               source: Remote
               module: git::https://github.com/terraform-aws-modules/terraform-aws-kms.git?ref=v4.2.0
